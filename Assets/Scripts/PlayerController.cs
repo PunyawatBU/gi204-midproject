@@ -1,9 +1,15 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    public TextMeshProUGUI timeText;
+    public TextMeshProUGUI timeFinalText;
+    private float time;
+
     public GameObject titleScreen;
     public GameObject gameOverScreen;
     public GameObject gameWinScreen;
@@ -32,6 +38,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         Time.timeScale = 0f;
+        gameWinScreen.SetActive(false);
         gameOverScreen.SetActive(false);
         titleScreen.SetActive(true);
     }
@@ -39,6 +46,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        time = Time.deltaTime;
+        timeText.text = "Time : " + time.ToString("0.00");
+
         if (Input.GetKey(KeyCode.W))
         {
             //rb.AddForce(moveForce * Vector3.forward);
@@ -119,6 +129,7 @@ public class PlayerController : MonoBehaviour
 
     public void GameWin()
     {
+        timeFinalText = timeText;
         Time.timeScale = 0f;
         gameWinScreen.SetActive(true);
     }
