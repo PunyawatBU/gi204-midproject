@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
 {
     public TextMeshProUGUI timeText;
     public TextMeshProUGUI timeFinalText;
-    private float time;
+    private float time = 0f;
 
     public GameObject titleScreen;
     public GameObject gameOverScreen;
@@ -16,6 +16,10 @@ public class PlayerController : MonoBehaviour
 
     public Button playButton;
     public Button exitButton;
+    public Button replayButton;
+
+    public AudioClip jumpSound;
+    public AudioSource audioSource;
 
     [SerializeField] private float speed = 5f;
     [SerializeField] private Rigidbody rb;
@@ -31,7 +35,8 @@ public class PlayerController : MonoBehaviour
     {
         playButton.onClick.AddListener(StartGame);
         exitButton.onClick.AddListener(Exit);
-        
+        replayButton.onClick.AddListener(Restart);
+
     }
     void Start()
     {
@@ -46,8 +51,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        time = Time.deltaTime;
+        time += Time.deltaTime;
         timeText.text = "Time : " + time.ToString("0.00");
+        timeFinalText.text = "Time : " + time.ToString("0.00");
 
         if (Input.GetKey(KeyCode.W))
         {
@@ -77,6 +83,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.Space)&& isOnGround)
         {
             rb.AddForce(jumpForce * Vector3.up, ForceMode.Impulse);
+            audioSource.PlayOneShot(jumpSound);
             isOnGround = false;
         }
 
@@ -129,9 +136,9 @@ public class PlayerController : MonoBehaviour
 
     public void GameWin()
     {
-        timeFinalText = timeText;
         Time.timeScale = 0f;
         gameWinScreen.SetActive(true);
+        Destroy(timeText);
     }
 
     public void Restart()
