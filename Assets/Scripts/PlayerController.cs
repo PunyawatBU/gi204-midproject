@@ -29,7 +29,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool isOnGround = true;
     [SerializeField] private bool isGameActive = true;
     [SerializeField] private bool isWin = false;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     void Awake()
     {
@@ -48,7 +47,6 @@ public class PlayerController : MonoBehaviour
         titleScreen.SetActive(true);
     }
 
-    // Update is called once per frame
     void Update()
     {
         time += Time.deltaTime;

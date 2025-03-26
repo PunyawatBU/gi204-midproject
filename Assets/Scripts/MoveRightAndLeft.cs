@@ -10,7 +10,7 @@ public class MoveRightAndLeft : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        rb.AddForce(Vector3.right * rollingForce);
+        rb.AddForce(Vector3.right * rollingForce * Time.deltaTime);
     }
 
     // Update is called once per frame
